@@ -2,13 +2,14 @@ package controllers
 
 import javax.inject._
 import play.api.mvc._
+import play.api.db.Database
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+class HomeController @Inject()(cc: ControllerComponents, db: Database @play.db.NamedDatabase(value="default")) extends AbstractController(cc) {
 
   /**
    * Create an Action to render an HTML page with a welcome message.
@@ -17,6 +18,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
    * a path of `/`.
    */
   def index = Action {
+    db.withConnection(conn => println("Success!"))
     Ok(views.html.index("Your new application is ready."))
   }
 

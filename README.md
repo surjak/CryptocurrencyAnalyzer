@@ -1,16 +1,20 @@
+
 # Cryptocurrency analyzer
 
-# Contributors
+
+
+## Contributors
 - [Mateusz Surjak](https://github.com/surjak)
 
 - [Radosław Kopeć](https://github.com/radekkpc)
 
 - [Andrzej Podobiński](https://github.com/andrzejPodo)
 
-# Technologies
+## Technologies
 
 - Scala
 - Play Framework
+
 
 # Run
 Install [docker](https://docs.docker.com/get-docker/) and run

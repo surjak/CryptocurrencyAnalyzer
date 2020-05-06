@@ -1,8 +1,8 @@
 package controllers
 
 import javax.inject._
-import play.api.mvc._
 import play.api.db.Database
+import play.api.mvc._
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -18,8 +18,8 @@ class HomeController @Inject()(cc: ControllerComponents, db: Database @play.db.N
    * a path of `/`.
    */
   def index = Action {
-    db.withConnection(conn => println("Success!"))
-    Ok(views.html.index("Your new application is ready."))
+    //    db.withConnection(conn => println("Success!"))
+    Ok(views.html.index("Welcome to Cryptocurrency analyzer."))
   }
 
 }

@@ -1,0 +1,27 @@
+@import helper._
+@(userForm: Form[UserForm])(implicit messages: Messages)
+
+
+@main("Cryptocurrency Analyzer") {
+
+    <h1>Register</h1>
+    @form(action = routes.AuthController.createUser()) {
+        @inputText(userForm("email"), '_showConstraints -> false)
+        @inputPassword(userForm("password"), '_showConstraints -> false)
+        @inputPassword(userForm("confirmPassword"), '_showConstraints -> false)
+
+
+        <input type="submit" value="Submit" class="btn btn-success">
+    }
+    @if(userForm.hasGlobalErrors) {
+        <ul>
+        @userForm.globalErrors.map { error =>
+            <li>@error.message</li>
+        }
+        </ul>
+    }
+}
+
+
+
+

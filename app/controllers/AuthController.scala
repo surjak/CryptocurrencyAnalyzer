@@ -18,9 +18,9 @@ case class UserForm(email: String, password: String, confirmPassword: String)
 object UserForm {
   val form: Form[UserForm] = Form(
     mapping(
-      "email" -> email,
-      "password" -> text(minLength = 6),
-      "confirmPassword" -> text
+      "Email" -> email,
+      "Password" -> text(minLength = 6),
+      "Confirm password" -> text
     )(UserForm.apply)(UserForm.unapply).verifying("Passwords do not match", data => data.password == data.confirmPassword)
   )
 }
@@ -45,19 +45,12 @@ class AuthController @Inject()(cc: ControllerComponents, protected val dbConfigP
           if (data) {
             Redirect(routes.HomeController.index())
           } else {
-            BadRequest(views.html.register(UserForm.form))
+            Redirect(routes.AuthController.register()).flashing("userExists" -> "User already exists!")
           }
         )
 
       }
     )
-    //    req.body.asFormUrlEncoded.map(data => {
-    //      val email = data("email").head
-    //      val password = data("password").head
-    //      val confirmPassword = data("confirmPassword").head
-    //      println(email, password, confirmPassword)
-    //      Future.successful(Redirect(routes.AuthController.register()))
-    //    }).getOrElse(Future.successful(Redirect(routes.AuthController.register())))
   }
 
 }

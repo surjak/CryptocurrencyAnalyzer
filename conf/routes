@@ -19,3 +19,5 @@ POST        /register            controllers.AuthController.createUser
 GET         /login               controllers.AuthController.login
 
 POST        /login               controllers.AuthController.loginHandler
+
+GET         /app                 controllers.AppController.app

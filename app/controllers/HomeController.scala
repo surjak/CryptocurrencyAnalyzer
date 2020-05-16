@@ -15,25 +15,7 @@ import scala.concurrent.ExecutionContext
 class HomeController @Inject()(cc: ControllerComponents, protected val dbConfigProvider: DatabaseConfigProvider)(implicit ex: ExecutionContext)
   extends AbstractController(cc) with HasDatabaseConfigProvider[JdbcProfile] {
 
-  //  private val model = new UserDatabaseModel(db)
-
-  /**
-   * Create an Action to render an HTML page with a welcome message.
-   * The configuration in the `routes` file means that this method
-   * will be called when the application receives a `GET` request with
-   * a path of `/`.
-   */
   def index = Action { implicit req =>
-    //    model.createUser("ala@gmail.com", "ala123").map(data => {
-    //      if (!data) {
-    //        Future.successful(Ok(views.html.index("Welcome to Cryptocurrency analyzer. Not found")))
-    //      }
-    //      else {
-    //        Future.successful(Ok(views.html.index("Welcome to Cryptocurrency analyzer.Found")))
-    //      }
-    //
-    //    })
-    //    Future.successful(Ok(views.html.index("Welcome to Cryptocurrency analyzer.")))
     Ok(views.html.index("Welcome to Cryptocurrency analyzer."))
   }
 

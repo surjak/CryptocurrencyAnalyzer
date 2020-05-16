@@ -2,19 +2,19 @@
 * This template takes a single argument, a String containing a
 * message to display.
 *@
-@(message: String)(implicit flash: Flash, request: RequestHeader)
+@(message: String)
 @*
 * Call the `main` template with two arguments. The first
 * argument is a `String` with the title of the page, the second
 * argument is an `Html` object containing the body of the page.
 *@
 @main("Cryptocurrency Analyzer") {
-    @flash.get("Login").map(str => <div class="alert alert-success" role="alert">Login succeeded!</div>)
-    @flash.get("Register").map(str => <div class="alert alert-success" role="alert">Registered!</div>)
+    @navbar("INDEX")
     @*
     * Get an `Html` object by calling the built-in Play welcome
     * template and passing a `String` message.
     *@
-    <h1>@message</h1>
-
+    <div class="container mt-3">
+        <h1>@message</h1>
+    </div>
 }

@@ -52,7 +52,7 @@ class AuthController @Inject()(cc: ControllerComponents, protected val dbConfigP
 
         model.createUser(formData.email, formData.password).map(data =>
           if (data) {
-            Redirect(routes.HomeController.index()).flashing("Register" -> "Registered!")
+            Redirect(routes.AppController.app()).flashing("Register" -> "Registered!")
           } else {
             Redirect(routes.AuthController.register()).flashing("userExists" -> "User already exists!")
           }
@@ -73,7 +73,7 @@ class AuthController @Inject()(cc: ControllerComponents, protected val dbConfigP
       formData => {
         model.validateLogin(formData.email, formData.password).map(data =>
           if (data) {
-            Redirect(routes.HomeController.index()).flashing("Login" -> "Login succeeded!")
+            Redirect(routes.AppController.app()).flashing("Login" -> "Login succeeded!")
           } else {
             Redirect(routes.AuthController.login()).flashing("LoginFailed" -> "Login failed!")
           }

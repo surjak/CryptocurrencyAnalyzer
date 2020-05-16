@@ -1,17 +1,14 @@
 package models
 
+import models.Tables._
+import org.mindrot.jbcrypt.BCrypt
 import slick.jdbc.PostgresProfile.api._
 
 import scala.concurrent.{ExecutionContext, Future}
-import models.Tables._
-import org.mindrot.jbcrypt.BCrypt
-
-import scala.util.Success
 
 class UserDatabaseModel(db: Database)(implicit ec: ExecutionContext) {
   def validateLogin(email: String, password: String): Future[Boolean] = {
     val matches = db.run(Users.filter(userRow => userRow.email === email).result)
-    println(email, password)
     matches.map(userRows => userRows.exists(userRow => BCrypt.checkpw(password, userRow.password)))
   }
 

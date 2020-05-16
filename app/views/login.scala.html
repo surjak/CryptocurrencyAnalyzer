@@ -1,0 +1,40 @@
+@import helper._
+
+@(loginForm: Form[LoginForm])(implicit messages: Messages, flash: Flash, request: RequestHeader)
+
+
+@main("Cryptocurrency Analyzer") {
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-6 offset-3">
+
+                <h1>Login</h1>
+                @flash.get("LoginFailed").map(str => <div class="alert alert-danger" role="alert">Login failed</div>)
+                @form(action = routes.AuthController.loginHandler()) {
+                    @helper.CSRF.formField
+                    <div class="form-group">
+                    @inputText(loginForm("Email"), '_showConstraints -> false, 'class -> "form-control")
+                    </div>
+                    <div class="form-group">@inputPassword(loginForm("Password"), '_showConstraints -> false, 'class -> "form-control")</div>
+                    @if(loginForm.hasGlobalErrors) {
+                        <ul>
+                        @loginForm.globalErrors.map { error =>
+                            <li>@error.message</li>
+                        }
+                        </ul>
+                    }
+
+                    <input type="submit" value="Login" class="btn btn-success">
+                    }
+
+
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+

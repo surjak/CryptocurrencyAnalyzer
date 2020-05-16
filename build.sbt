@@ -16,7 +16,7 @@ libraryDependencies ++= Seq("org.postgresql" % "postgresql" % "42.2.12")
 libraryDependencies ++= Seq("org.mindrot" % "jbcrypt" % "0.4")
 libraryDependencies += "com.typesafe.play" %% "play-slick" % "5.0.0"
 libraryDependencies += "com.typesafe.slick" %% "slick-codegen" % "3.3.2"
-
+libraryDependencies += "com.jason-goodwin" %% "authentikat-jwt" % "0.4.5"
 unmanagedResourceDirectories in Test <+= baseDirectory(_ / "target/web/public/test")
 
       

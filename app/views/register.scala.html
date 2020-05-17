@@ -1,0 +1,44 @@
+@import helper._
+
+@(userForm: Form[UserForm])(implicit messages: Messages, flash: Flash, request: RequestHeader)
+
+
+@main("Cryptocurrency Analyzer") {
+    @navbar("REGISTER")
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-6 offset-3">
+
+                <h1>Register</h1>
+
+                @flash.get("userExists").map(str => <div class="alert alert-danger" role="alert">User already exists</div>)
+
+
+                @form(action = routes.AuthController.createUser()) {
+                    @helper.CSRF.formField
+                    <div class="form-group">
+                    @inputText(userForm("Email"), '_showConstraints -> false, 'class -> "form-control")
+                    </div>
+                    <div class="form-group">@inputPassword(userForm("Password"), '_showConstraints -> false, 'class -> "form-control")</div>
+                    <div class="form-group">@inputPassword(userForm("Confirm password"), '_showConstraints -> false, 'class -> "form-control")</div>
+                    @if(userForm.hasGlobalErrors) {
+                        <ul>
+                        @userForm.globalErrors.map { error =>
+                            <li>@error.message</li>
+                        }
+                        </ul>
+                    }
+
+                    <input type="submit" value="Register" class="btn btn-success">
+                    }
+
+
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+

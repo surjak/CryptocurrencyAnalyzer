@@ -1,0 +1,13 @@
+@*
+* This template takes a single argument, a String containing a
+* message to display.
+*@
+@()(implicit flash: Flash, request: RequestHeader, session: Session)
+
+    @main("Cryptocurrency Analyzer") {
+        @navbar("APP")
+        @flash.get("Login").map(str => <div class="alert alert-success" role="alert">Login succeeded!</div>)
+        @flash.get("Register").map(str => <div class="alert alert-success" role="alert">Registered!</div>)
+
+        <h1>You are in!</h1>
+    }

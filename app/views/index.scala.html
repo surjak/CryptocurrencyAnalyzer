@@ -9,10 +9,12 @@
 * argument is an `Html` object containing the body of the page.
 *@
 @main("Cryptocurrency Analyzer") {
+    @navbar("INDEX")
     @*
     * Get an `Html` object by calling the built-in Play welcome
     * template and passing a `String` message.
     *@
-    @welcome(message, style = "scala")
-
+    <div class="container mt-3">
+        <h1>@message</h1>
+    </div>
 }

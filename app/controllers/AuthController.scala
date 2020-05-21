@@ -1,6 +1,5 @@
 package controllers
 
-import config.JwtUtility
 import javax.inject.{Inject, Singleton}
 import models.UserDatabaseModel
 import play.api.data.Form
@@ -53,8 +52,7 @@ class AuthController @Inject()(cc: ControllerComponents, protected val dbConfigP
 
         model.createUser(formData.email, formData.password).map(data =>
           if (data) {
-            val token = JwtUtility.createToken(formData.email)
-            Redirect(routes.AppController.app()).flashing("Register" -> "Registered!").withSession("jwtAuth" -> token)
+            Redirect(routes.AppController.app()).flashing("Register" -> "Registered!").withSession("email" -> formData.email)
           } else {
             Redirect(routes.AuthController.register()).flashing("userExists" -> "User already exists!")
           }
@@ -74,9 +72,7 @@ class AuthController @Inject()(cc: ControllerComponents, protected val dbConfigP
       formData => {
         model.validateLogin(formData.email, formData.password).map(data =>
           if (data) {
-            val token = JwtUtility.createToken(formData.email)
-            Redirect(routes.AppController.app()).flashing("Login" -> "Login succeeded!").withSession("jwtAuth" -> token)
-
+            Redirect(routes.AppController.app()).flashing("Login" -> "Login succeeded!").withSession("email" -> formData.email)
           } else {
             Redirect(routes.AuthController.login()).flashing("LoginFailed" -> "Login failed!")
           }

@@ -3,18 +3,18 @@
 * message to display.
 *@
 @(message: String)
-@*
-* Call the `main` template with two arguments. The first
-* argument is a `String` with the title of the page, the second
-* argument is an `Html` object containing the body of the page.
-*@
-@main("Cryptocurrency Analyzer") {
-    @navbar("INDEX")
     @*
-    * Get an `Html` object by calling the built-in Play welcome
-    * template and passing a `String` message.
+    * Call the `main` template with two arguments. The first
+    * argument is a `String` with the title of the page, the second
+    * argument is an `Html` object containing the body of the page.
     *@
-    <div class="container mt-3">
-        <h1>@message</h1>
-    </div>
-}
+    @main("Email Alert") {
+        @navbar("INDEX")
+        @*
+        * Get an `Html` object by calling the built-in Play welcome
+        * template and passing a `String` message.
+        *@
+        <div class="container mt-3">
+            <h1>@message</h1>
+        </div>
+    }

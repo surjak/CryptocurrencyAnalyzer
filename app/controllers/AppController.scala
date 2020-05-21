@@ -1,6 +1,6 @@
 package controllers
 
-import config.JwtUtility
+import config.EmailSender
 import javax.inject.{Inject, Singleton}
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import play.api.i18n.I18nSupport
@@ -14,15 +14,9 @@ class AppController @Inject()(cc: ControllerComponents, protected val dbConfigPr
   extends AbstractController(cc) with HasDatabaseConfigProvider[JdbcProfile] with I18nSupport {
 
   def app = Action { implicit req =>
-    val jwtToken = req.session.get("jwtAuth").getOrElse("")
-    if (JwtUtility.isValidToken(jwtToken)) {
-      JwtUtility.decodePayload(jwtToken).fold {
-        println("Fail")
-      } {
-        payload =>
-          println(payload)
-      }
-    }
+    val email = req.session.get("email").getOrElse("zle")
+    println(email)
+    EmailSender.sendEmail();
     Ok(views.html.app())
   }
 

@@ -18,6 +18,7 @@ libraryDependencies += "com.typesafe.play" %% "play-slick" % "5.0.0"
 libraryDependencies += "com.typesafe.slick" %% "slick-codegen" % "3.3.2"
 libraryDependencies += "com.jason-goodwin" %% "authentikat-jwt" % "0.4.5"
 libraryDependencies += "com.github.daddykotex" %% "courier" % "2.0.0"
+libraryDependencies += "org.scalaj" %% "scalaj-http" % "2.4.2"
 unmanagedResourceDirectories in Test <+= baseDirectory(_ / "target/web/public/test")
 libraryDependencies ++= Seq(
   "be.objectify" %% "deadbolt-scala" % "2.6.0"

@@ -94,3 +94,4 @@ trait Tables {
   /** Collection-like TableQuery object for table Users */
   lazy val Users = new TableQuery(tag => new Users(tag))
 }
+

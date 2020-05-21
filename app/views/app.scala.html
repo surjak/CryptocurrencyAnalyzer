@@ -4,7 +4,7 @@
 *@
 @()(implicit flash: Flash, request: RequestHeader, session: Session)
 
-    @main("Cryptocurrency Analyzer") {
+    @main("Email Alert") {
         @navbar("APP")
         @flash.get("Login").map(str => <div class="alert alert-success" role="alert">Login succeeded!</div>)
         @flash.get("Register").map(str => <div class="alert alert-success" role="alert">Registered!</div>)

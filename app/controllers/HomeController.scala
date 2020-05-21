@@ -16,7 +16,7 @@ class HomeController @Inject()(cc: ControllerComponents, protected val dbConfigP
   extends AbstractController(cc) with HasDatabaseConfigProvider[JdbcProfile] {
 
   def index = Action { implicit req =>
-    Ok(views.html.index("Welcome to Cryptocurrency analyzer."))
+    Ok(views.html.index("Welcome to Email Alert."))
   }
 
 }

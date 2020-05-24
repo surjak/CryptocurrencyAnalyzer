@@ -1,0 +1,87 @@
+@*
+* This template takes a single argument, a String containing a
+* message to display.
+*@
+@import helper._
+@(csForm: Form[ConstraintsForm])(implicit messages: Messages, flash: Flash, request: RequestHeader, session: Session)
+
+    @main("Email Alert") {
+        @navbar("APP")
+        @flash.get("Login").map(str => <div class="alert alert-success" role="alert">Login succeeded!</div>)
+        @flash.get("Register").map(str => <div class="alert alert-success" role="alert">Registered!</div>)
+
+
+
+
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-6 offset-3">
+
+                    <div class="container mt-3 ml-0 pl-0">
+                        <button class="btn btn-primary " id="location">Send us your location!</button>
+                        <span id="confirm"></span>
+                    </div>
+
+                    <h1>Add constraint</h1>
+                    @form(action = routes.AppController.createConstraint()) {
+                        @helper.CSRF.formField
+                        <div class="form-group">
+                        @select(field = csForm("Pollution Type"),
+                            options = Seq("PM1" -> "PM1",
+                                "PM2.5" -> "PM2.5",
+                                "PM10" -> "PM10",
+                                "TEMPERATURE" -> "TEMPERATURE",
+                                "HUMIDITY" -> "HUMIDITY",
+                                "PRESSURE" -> "PRESSURE",
+                                "WIND SPEED" -> "WIND SPEED",
+                                "WIND BEARING" -> "WIND BEARING",
+                                "NO2" -> "NO2",
+                                "O3" -> "O3",
+                                "SO2" -> "SO2",
+                                "CO" -> "CO",
+                                "H2S" -> "H2S",
+                                "NO" -> "NO"),
+                            '_showConstraints -> false,
+                            'class -> "form-control")
+                        </div>
+                        <div class="form-group">
+                        @inputText(csForm("Value"), '_showConstraints -> false,
+                            'class -> "form-control", 'type -> "number", 'step -> "0.01",
+                            'min -> "0")
+                        </div>
+
+                        <input type="submit" value="Create" class="btn btn-success">
+                        }
+
+                </div>
+            </div>
+        </div>
+        <script>
+                document.getElementById("location").addEventListener('click',
+                        () => {
+                            console.log("Sent")
+                            navigator.geolocation.getCurrentPosition((position) => {
+                                console.log(position.coords.latitude, position.coords.longitude);
+                                fetch('@routes.AppController.loadUserLonAndLat()', {
+                                    method: 'POST', // or 'PUT'
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        lat: position.coords.latitude,
+                                        lon: position.coords.longitude
+                                    }),
+                                })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            console.log('Success:', data);
+                                            document.getElementById("confirm").innerHTML = "DONE!"
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                        });
+                            });
+
+
+                        })</script>
+    }

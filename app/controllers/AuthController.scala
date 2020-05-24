@@ -40,6 +40,7 @@ class AuthController @Inject()(cc: ControllerComponents, protected val dbConfigP
 
   private val model = new UserDatabaseModel(db)
 
+
   def register = Action { implicit req =>
     Ok(views.html.register(UserForm.form))
   }

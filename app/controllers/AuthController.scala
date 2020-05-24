@@ -52,7 +52,7 @@ class AuthController @Inject()(cc: ControllerComponents, protected val dbConfigP
 
         model.createUser(formData.email, formData.password).map(data =>
           if (data) {
-            Redirect(routes.AppController.app()).flashing("Register" -> "Registered!").withSession("email" -> formData.email)
+            Redirect(routes.AppController.configuration()).flashing("Register" -> "Registered!").withSession("email" -> formData.email)
           } else {
             Redirect(routes.AuthController.register()).flashing("userExists" -> "User already exists!")
           }
@@ -65,6 +65,10 @@ class AuthController @Inject()(cc: ControllerComponents, protected val dbConfigP
     Ok(views.html.login(LoginForm.form))
   }
 
+  def logout = Action { implicit req =>
+    Redirect(routes.HomeController.index()).withNewSession
+  }
+
   def loginHandler = Action.async { implicit req =>
     LoginForm.form.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(views.html.login(formWithErrors)))
@@ -72,7 +76,7 @@ class AuthController @Inject()(cc: ControllerComponents, protected val dbConfigP
       formData => {
         model.validateLogin(formData.email, formData.password).map(data =>
           if (data) {
-            Redirect(routes.AppController.app()).flashing("Login" -> "Login succeeded!").withSession("email" -> formData.email)
+            Redirect(routes.AppController.configuration()).flashing("Login" -> "Login succeeded!").withSession("email" -> formData.email)
           } else {
             Redirect(routes.AuthController.login()).flashing("LoginFailed" -> "Login failed!")
           }

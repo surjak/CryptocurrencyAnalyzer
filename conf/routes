@@ -20,4 +20,9 @@ GET         /login               controllers.AuthController.login
 
 POST        /login               controllers.AuthController.loginHandler
 
-GET         /app                 controllers.AppController.app
+GET         /logout              controllers.AuthController.logout
+
+GET         /configuration        controllers.AppController.configuration
+
++nocsrf
+POST        /registerUserLonAndLat        controllers.AppController.loadUserLonAndLat

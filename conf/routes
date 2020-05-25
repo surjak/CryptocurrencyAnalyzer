@@ -28,3 +28,7 @@ GET         /configuration                controllers.AppController.configuratio
 POST        /registerUserLonAndLat        controllers.AppController.loadUserLonAndLat
 
 POST        /configuration                controllers.AppController.createConstraint
+
+GET         /panel                        controllers.AppController.showPanel
+
+POST        /deleteConstraint             controllers.AppController.deleteConstraint

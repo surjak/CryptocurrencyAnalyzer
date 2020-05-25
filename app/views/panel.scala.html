@@ -1,0 +1,36 @@
+@import models.Tables._
+@import helper._
+@(list: List[ConstraintsRow])(implicit messages: Messages, flash: Flash, request: RequestHeader)
+@main("Email Alert") {
+    @navbar("APP")
+    @flash.get("Deleted").map(str => <div class="alert alert-success" role="alert">Successfully deleted</div>)
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-6 mx-auto text-center">
+                <h1 class="">Your constraints!</h1>
+                @for(constraint <- list) {
+                    <div class="row mt-2">
+                        <div class="col-6 text-center">
+                            <span style="font-size: 22px">@constraint.pollutiontype</span> <span style="font-size: 22px; color: #ffa500">-></span>
+                            <span style="font-size: 22px">@constraint.specifiedvalue</span>
+                        </div>
+                        <div class="col-6 text-center">
+                            <form action="@routes.AppController.deleteConstraint()" method="post">
+                                @helper.CSRF.formField
+                                <input type="hidden" name="pollutiontype" value="@constraint.pollutiontype">
+                                <button type="submit" class="btn btn-danger align-self-center justify-self-center" >Delete</button>
+                            </form>
+
+
+                        </div>
+                    </div>
+
+                    }
+            </div>
+        </div>
+
+
+    </div>
+
+
+}

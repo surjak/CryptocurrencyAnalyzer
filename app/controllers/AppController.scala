@@ -51,7 +51,7 @@ class AppController @Inject()(dbapi: DBApi,cc: ControllerComponents, protected v
 
     val gowno = dbController.getUserJoinConstraint()
 
-    println(AirlyDriver.checkUsers(dbController.getUserJoinConstraint()))
+    //println(AirlyDriver.checkUsers(dbController.getUserJoinConstraint()))
 
     //    val obj = AirlyDriver.getParameterValue()
 

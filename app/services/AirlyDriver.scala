@@ -8,7 +8,7 @@ import models.{DBControllerAnd, Location, Measure, User, UserJoinConstraint}
 import scalaj.http._
 import play.api.libs.json._
 import models.Tables.UsersRow
-import models.api.PollutionModel
+
 import org.apache.commons.mail.Email
 
 object AirlyDriver {

@@ -1,5 +1,5 @@
 
-# Cryptocurrency analyzer
+# Email Alert
 
 
 

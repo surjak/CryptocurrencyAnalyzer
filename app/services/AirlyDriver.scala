@@ -3,11 +3,13 @@ package services
 
 import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
 import com.fasterxml.jackson.module.scala.{DefaultScalaModule, ScalaObjectMapper}
-import models.{DBControllerAnd, Measure, User, Location, UserJoinConstraint}
+import config.EmailSender
+import models.{DBControllerAnd, Location, Measure, User, UserJoinConstraint}
 import scalaj.http._
 import play.api.libs.json._
 import models.Tables.UsersRow
 import models.api.PollutionModel
+import org.apache.commons.mail.Email
 
 object AirlyDriver {
   def getNearestMeasurements(userLocation: Location) = {
@@ -31,6 +33,7 @@ object AirlyDriver {
       if(checkUser(userWithConstraints)){
         //tu będzie trzeba wstawić wysylanie maila
         println(s"Wysylam mail do ${userWithConstraints.email} bo przekroczył: ${userWithConstraints.pollutionType}")
+        EmailSender.sendEmail(userWithConstraints.email, s"${userWithConstraints.pollutionType} przekroczyło normę!")
       }
     })
   }

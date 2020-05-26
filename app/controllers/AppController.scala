@@ -55,21 +55,21 @@ class AppController @Inject()(dbapi: DBApi,cc: ControllerComponents, protected v
 
     //    val obj = AirlyDriver.getParameterValue()
 
-    Ok(views.html.configuration(ConstraintsForm.form))
+    Ok(views.html.configuration(ConstraintsForm.form, "Add constraint"))
   }
 
-  def loadUserLonAndLat = Action { implicit req =>
+  def loadUserLonAndLat = Action.async { implicit req =>
     val email = req.session.get("email")
     val json = req.body.asJson
     val lat = (json.get \ "lat").get.toString().toDouble
     val lon = (json.get \ "lon").get.toString().toDouble
     db.run(Users.filter(userRow => userRow.email === email).map(u => (u.lat, u.lon)).update(Option(lat), Option(lon)))
-    Ok(Json.toJson("{status: 'ok'}"))
+    Future.successful(Ok(Json.toJson("{status: 'ok'}")))
   }
 
   def createConstraint = Action.async { implicit req =>
     ConstraintsForm.form.bindFromRequest.fold(
-      formWithErrors => Future.successful(BadRequest(views.html.configuration(formWithErrors)))
+      formWithErrors => Future.successful(BadRequest(views.html.configuration(formWithErrors, "Add constraint")))
       ,
       formdata => {
         val email = req.session.get("email")
@@ -77,10 +77,26 @@ class AppController @Inject()(dbapi: DBApi,cc: ControllerComponents, protected v
         userId.map(id => id.head).map(id =>
           db.run(Constraints += ConstraintsRow(id, formdata.pollutionType, Option(formdata.value))))
 
-        Future.successful(Redirect(routes.AppController.createConstraint()))
+        Future.successful(Redirect(routes.AppController.createConstraint()).flashing("Saved" -> "Saved"))
       }
     )
 
+  }
+
+  def showPanel = Action.async { implicit req =>
+    val email = req.session.get("email").getOrElse("zle")
+    val userId = db.run(Users.filter(userRow => userRow.email === email).map(u => u.id).result)
+    val data = userId.map(id => id.head).flatMap(id => db.run(Constraints.filter(c => c.userId === id).result).map(d => d.toList))
+    data.map(d => Ok(views.html.panel(d)))
+  }
+
+  def deleteConstraint = Action.async { implicit req =>
+    val email = req.session.get("email").getOrElse("zle")
+    val pollutionType = req.body.asFormUrlEncoded.get("pollutiontype").head
+    val userId = db.run(Users.filter(userRow => userRow.email === email).map(u => u.id).result)
+    userId.map(id => id.head).flatMap(id => db.run(Constraints.filter(c => c.userId === id && c.pollutiontype === pollutionType).delete)).map(d =>
+      Redirect(routes.AppController.showPanel()).flashing("Deleted" -> "Deleted")
+    )
   }
 
 }

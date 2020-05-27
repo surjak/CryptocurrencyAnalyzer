@@ -1,15 +1,9 @@
 package services
 
 
-import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper}
-import com.fasterxml.jackson.module.scala.{DefaultScalaModule, ScalaObjectMapper}
-import config.EmailSender
-import models.{DBControllerAnd, Location, Measure, User, UserJoinConstraint}
-import scalaj.http._
+import models.{Location, Measure, UserJoinConstraint}
 import play.api.libs.json._
-import models.Tables.UsersRow
-
-import org.apache.commons.mail.Email
+import scalaj.http._
 
 object AirlyDriver {
   def getNearestMeasurements(userLocation: Location) = {
@@ -49,10 +43,3 @@ object AirlyDriver {
     }
   }
 }
-
-
-object Test extends App{
-  println("Ala")
-  //  AirlyDriver.getParameterValue()
-}
-

@@ -1,4 +1,4 @@
-package config
+package services
 
 import authentikat.jwt.{JsonWebToken, JwtClaimsSet, JwtHeader}
 

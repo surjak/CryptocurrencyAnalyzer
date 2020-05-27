@@ -1,16 +1,25 @@
 package controllers
 
 import javax.inject.{Inject, Singleton}
-import models.UserDatabaseModel
 import play.api.data.Form
 import play.api.data.Forms.{mapping, _}
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{AbstractController, ControllerComponents}
+import services.AuthService
 import slick.jdbc.JdbcProfile
 
 import scala.concurrent.{ExecutionContext, Future}
 
+case class LoginForm(email: String, password: String)
+
+object LoginForm {
+  val form: Form[LoginForm] = Form(
+    mapping("Email" -> email,
+      "Password" -> text
+    )(LoginForm.apply)(LoginForm.unapply)
+  )
+}
 
 case class UserForm(email: String, password: String, confirmPassword: String)
 
@@ -24,20 +33,12 @@ object UserForm {
   )
 }
 
-case class LoginForm(email: String, password: String)
 
-object LoginForm {
-  val form: Form[LoginForm] = Form(
-    mapping("Email" -> email,
-      "Password" -> text
-    )(LoginForm.apply)(LoginForm.unapply)
-  )
-}
 @Singleton
 class AuthController @Inject()(cc: ControllerComponents, protected val dbConfigProvider: DatabaseConfigProvider)(implicit ex: ExecutionContext)
   extends AbstractController(cc) with HasDatabaseConfigProvider[JdbcProfile] with I18nSupport {
 
-  private val model = new UserDatabaseModel(db)
+  private val model = new AuthService(db)
 
 
   def register = Action { implicit req =>

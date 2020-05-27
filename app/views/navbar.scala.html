@@ -1,47 +1,62 @@
 @(message: String)
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="@routes.HomeController.index()">ALERT</a>
-        <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-        >
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse " id="navbarSupportedContent">
         @if(message == "LOGIN" || message == "REGISTER" || message == "INDEX") {
-            <ul class="navbar-nav ml-auto mr-3">
+            <a class="navbar-brand" href="@routes.HomeController.index()">ALERT</a>
+            <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <li class="nav-item" >
-                    <a class="nav-link" href="@routes.AuthController.login()">Login</a >
-                </li>
-                <li class="nav-item" >
-                    <a class="nav-link" href="@routes.AuthController.register()">Register</a>
-                </li>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
 
-            </ul>
+                <ul class="navbar-nav ml-auto mr-3">
+
+                    <li class="nav-item" >
+                        <a class="nav-link" href="@routes.AuthController.login()">Login</a >
+                    </li>
+                    <li class="nav-item" >
+                        <a class="nav-link" href="@routes.AuthController.register()">Register</a>
+                    </li>
+
+                </ul>
+            </div>
         } else {
-            <ul class="navbar-nav ml-auto mr-3">
+            <a class="navbar-brand" href="@routes.HomeController.index()">ALERT</a>
+            <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <li class="nav-item" >
-                    <a class="nav-link" href="@routes.AppController.showPanel()">Panel</a >
-                </li>
-                <li class="nav-item" >
-                    <a class="nav-link" href="@routes.AppController.configuration()">Configuration</a >
-                </li>
-                <li class="nav-item" >
-                    <a class="nav-link" href="@routes.AuthController.logout()">Logout</a >
-                </li>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mr-3">
 
-            </ul>
+                    <li class="nav-item" >
+                        <a class="nav-link" href="@routes.AppController.showPanel()">Panel</a >
+                    </li>
+                    <li class="nav-item" >
+                        <a class="nav-link" href="@routes.AppController.configuration()">Configuration</a >
+                    </li>
+                    <li class="nav-item" >
+                        <a class="nav-link" href="@routes.AuthController.logout()">Logout</a >
+                    </li>
 
+                </ul>
+            </div>
         }
-        </div>
     </div>
 </nav>

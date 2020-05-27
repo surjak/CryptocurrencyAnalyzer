@@ -15,8 +15,8 @@ import scala.concurrent.ExecutionContext
 class HomeController @Inject()(cc: ControllerComponents, protected val dbConfigProvider: DatabaseConfigProvider)(implicit ex: ExecutionContext)
   extends AbstractController(cc) with HasDatabaseConfigProvider[JdbcProfile] {
 
-  def index = Action { implicit req =>
-    Ok(views.html.index("Welcome to Email Alert."))
+  def index(mess: String = "INDEX") = Action { implicit req =>
+    Ok(views.html.index("Welcome to Email Alert.", mess))
   }
 
 }

@@ -4,6 +4,7 @@ import models.Tables._
 import org.mindrot.jbcrypt.BCrypt
 import slick.jdbc.PostgresProfile.api._
 
+
 import scala.concurrent.{ExecutionContext, Future}
 
 class UserDatabaseModel(db: Database)(implicit ec: ExecutionContext) {
@@ -11,6 +12,7 @@ class UserDatabaseModel(db: Database)(implicit ec: ExecutionContext) {
     val matches = db.run(Users.filter(userRow => userRow.email === email).result)
     matches.map(userRows => userRows.exists(userRow => BCrypt.checkpw(password, userRow.password)))
   }
+
 
   def createUser(email: String, password: String): Future[Boolean] = {
     checkIfExists(email).flatMap(result =>

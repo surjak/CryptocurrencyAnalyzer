@@ -32,3 +32,4 @@ POST        /configuration                controllers.AppController.createConstr
 GET         /panel                        controllers.AppController.showPanel
 
 POST        /deleteConstraint             controllers.AppController.deleteConstraint
+

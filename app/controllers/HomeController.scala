@@ -1,5 +1,4 @@
 package controllers
-import play.api.Logger
 import javax.inject._
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import play.api.mvc._

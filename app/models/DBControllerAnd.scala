@@ -37,7 +37,7 @@ class DBControllerAnd (db: Database){
   }
 
   def getUserJoinConstraint(): List[UserJoinConstraint] = db.withConnection{ implicit c =>
-    val q = SQL("select email, lon, lat, \"pollutionType\", \"specifiedValue\" from users join \"Constraints\" C on users.id = C.user_id")
+    val q = SQL("select email, lon, lat, \"pollutionType\", \"specifiedValue\" from users join \"Constraints\" C on users.id = C.user_id where users.lon is not null and users.lat is not null")
     q.as(userJoinConstraint.*)
   }
 

@@ -1,6 +1,7 @@
 package controllers
 
 import anorm.{RowParser, SQL, SqlParser, ~}
+import config.EmailSender
 import javax.inject.{Inject, Singleton}
 import models.Tables._
 import play.api.data.Form
@@ -10,7 +11,6 @@ import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import play.api.i18n.I18nSupport
 import play.api.libs.json._
 import play.api.mvc.{AbstractController, ControllerComponents}
-
 import services.AirlyDriver
 import models.DBControllerAnd
 import slick.jdbc.JdbcProfile
@@ -40,16 +40,16 @@ class AppController @Inject()(dbapi: DBApi,cc: ControllerComponents, protected v
   extends AbstractController(cc) with HasDatabaseConfigProvider[JdbcProfile] with I18nSupport {
 
   def configuration = Action { implicit req =>
-    val email = req.session.get("email").getOrElse("zle")
-    //    println(email)
-    //    EmailSender.sendEmail("radek4ec@gmail.com", "Tutaj EmailAlert\nCos sie stalo");
+//    val email = req.session.get("email").getOrElse("zle")
+//    println(email)
+    EmailSender.sendEmail("andrzejpodobinski2@gmail.com", "Tutaj EmailAlert\nCos sie stalo");
 
-    val dbController = new DBControllerAnd(dbapi.database("default"))
-    val user = dbController.getUserByEmail("ala12@12.pl")
+    //val dbController = new DBControllerAnd(dbapi.database("default"))
+    //val user = dbController.getUserByEmail("ala12@12.pl")
 
 //    val nearestStationId = AirlyDriver.getNearestMeasurements(user)
 
-    val gowno = dbController.getUserJoinConstraint()
+    //val gowno = dbController.getUserJoinConstraint()
 
     //println(AirlyDriver.checkUsers(dbController.getUserJoinConstraint()))
 

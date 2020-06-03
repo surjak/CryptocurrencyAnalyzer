@@ -11,6 +11,8 @@
 
                 <h1>Login</h1>
                 @flash.get("LoginFailed").map(str => <div class="alert alert-danger" role="alert">Login failed</div>)
+                @flash.get("Login").map(str => <div class="alert alert-danger" role="alert">You have to be logged in to navigate that page!</div>)
+
                 @form(action = routes.AuthController.loginHandler()) {
                     @helper.CSRF.formField
                     <div class="form-group">

@@ -40,6 +40,7 @@ class AppController @Inject()(dbapi: DBApi, cc: ControllerComponents, protected 
       Ok(views.html.configuration(ConstraintsForm.form, "Add constraint"))
     ).getOrElse(Redirect(routes.AuthController.login()).flashing("Login" -> "Login"))
 
+
   }
 
   def loadUserLonAndLat = Action.async { implicit req =>
@@ -91,20 +92,9 @@ class AppController @Inject()(dbapi: DBApi, cc: ControllerComponents, protected 
       .getOrElse(Future.successful(Redirect(routes.AuthController.login()).flashing("Login" -> "Login")))
   }
 
-//  def startSending = Action.async { implicit  req => {
-//      SendingService.start()
-//      routes.HomeController.index()
-//    }
-//  }
   def startSending = Action { implicit req =>
     sending = new SendingService(dbapi.database("default"))
     sending.start()
     Redirect(routes.HomeController.index())
 }
-
-  def endSending = Action { implicit req =>
-    sending.stop()
-    Redirect(routes.HomeController.index())
-  }
-
 }

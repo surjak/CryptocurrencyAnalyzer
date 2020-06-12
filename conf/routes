@@ -33,4 +33,4 @@ GET         /panel                        controllers.AppController.showPanel
 
 POST        /deleteConstraint             controllers.AppController.deleteConstraint
 
-GET         /startSending                 controllers.AppController.startSending
+POST         /startSending                 controllers.AppController.startSending

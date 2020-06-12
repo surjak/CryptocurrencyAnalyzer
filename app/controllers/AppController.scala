@@ -93,6 +93,7 @@ class AppController @Inject()(dbapi: DBApi, cc: ControllerComponents, protected 
   }
 
   def startSending = Action { implicit req =>
+    println("Sending")
     sending = new SendingService(dbapi.database("default"))
     sending.start()
     Redirect(routes.HomeController.index())

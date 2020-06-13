@@ -1,7 +1,9 @@
 package models
 
-import anorm._
 
+import java.util.Date
+
+import anorm._
 import play.api.db._
 
 
@@ -20,15 +22,16 @@ class DBControllerAnd (db: Database){
   }
 
   def userJoinConstraint: RowParser[UserJoinConstraint] = (
-//    SqlParser.get[Int]("users.id") ~
+    SqlParser.get[Int]("users.id") ~
       SqlParser.get[String]("users.email") ~
       SqlParser.get[Double]("lat") ~
       SqlParser.get[Double]("lon") ~
       SqlParser.get[String]("pollutionType") ~
-        SqlParser.get[Double]("specifiedValue")
+      SqlParser.get[Double]("specifiedValue") ~
+      SqlParser.get[Date]("lastDate")
     ) map {
-    case columnvalue1 ~ columnvalue2 ~ columnvalue3 ~ columnvalue4 ~ columnvalue5 => // etc...
-      UserJoinConstraint(columnvalue1, columnvalue2, columnvalue3, columnvalue4, columnvalue5) // etc...
+    case columnvalue0 ~columnvalue1 ~ columnvalue2 ~ columnvalue3 ~ columnvalue4 ~ columnvalue5 ~ columnvalue6=> // etc...
+      UserJoinConstraint(columnvalue0, columnvalue1, columnvalue2, columnvalue3, columnvalue4, columnvalue5, columnvalue6) // etc...
   }
 
   def getUserByEmail(email: String) = db.withConnection { implicit c =>
@@ -37,10 +40,16 @@ class DBControllerAnd (db: Database){
   }
 
   def getUserJoinConstraint(): List[UserJoinConstraint] = db.withConnection{ implicit c =>
-    val q = SQL("select email, lon, lat, \"pollutionType\", \"specifiedValue\" from users join \"Constraints\" C on users.id = C.user_id where users.lon is not null and users.lat is not null")
+    val q = SQL("select id , email, lon, lat, \"pollutionType\", \"specifiedValue\", \"lastDate\" from users join \"Constraints\" C on users.id = C.user_id where users.lon is not null and users.lat is not null")
     q.as(userJoinConstraint.*)
   }
 
+  def setConstraintTime(date: Date,constraintId: Int,pollutionType: String): Unit = db.withConnection{
+    implicit c =>
+      val query = SQL("UPDATE \"Constraints\" SET \"lastDate\" = '"+ date.toString +"' WHERE user_id = "+ constraintId.toString +" and \"pollutionType\" = '" + pollutionType + "'")
+//      println(query)
+      query.executeUpdate()
+  }
 }
 
 

@@ -1,7 +1,9 @@
 package services
 
 
-import models.{Location, Measure, UserJoinConstraint}
+import java.util.Date
+
+import models.{DBControllerAnd, Location, Measure, UserJoinConstraint}
 import play.api.libs.json._
 import scalaj.http._
 
@@ -21,13 +23,28 @@ object AirlyDriver {
     (json \ "current" \ "values").get.as[JsArray].value.map(x => new Measure((x \ "name").as[String], (x \ "value").as[Double]))
 
   }
-
-  def checkUsers(usersWithConstraints: List[UserJoinConstraint]) = {
+  def getEmailsDelay(): Long ={
+     1000 * 60 * 60 * 12 // 12h
+  }
+  def checkUsers(usersWithConstraints: List[UserJoinConstraint],db :DBControllerAnd) = {
     usersWithConstraints.foreach(userWithConstraints =>{
-      if(checkUser(userWithConstraints)){
-        //tu będzie trzeba wstawić wysylanie maila
-        println(s"Wysylam mail do ${userWithConstraints.email} bo przekroczył: ${userWithConstraints.pollutionType}")
-        EmailSender.sendEmail(userWithConstraints.email, s"${userWithConstraints.pollutionType} przekroczyło normę!")
+//      println(userWithConstraints.lastDate)
+      var currDate = new Date()
+      var currentDate = currDate.getTime()
+//      println(currDate)
+//      println(currentDate)
+//      println(userWithConstraints.lastDate)
+//      println(userWithConstraints.lastDate.getTime)
+//      println(currentDate - userWithConstraints.lastDate.getTime())
+//      println(getEmailsDelay())
+      if(currentDate - userWithConstraints.lastDate.getTime() >= getEmailsDelay()) {
+        if (checkUser(userWithConstraints)) {
+
+          //tu będzie trzeba wstawić wysylanie maila
+          println(s"Wysylam mail do ${userWithConstraints.email} bo przekroczył: ${userWithConstraints.pollutionType}")
+          EmailSender.sendEmail(userWithConstraints.email, s"${userWithConstraints.pollutionType} przekroczyło normę!")
+          db.setConstraintTime(currDate,userWithConstraints.user_id,userWithConstraints.pollutionType)
+        }
       }
     })
   }

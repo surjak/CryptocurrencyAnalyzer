@@ -32,4 +32,3 @@ libraryDependencies += "org.apache.commons" % "commons-email" % "1.5"
 libraryDependencies += "javax.mail" % "javax.mail-api" % "1.6.0"
 
 resolvers += Resolver.sonatypeRepo("snapshots")
-      

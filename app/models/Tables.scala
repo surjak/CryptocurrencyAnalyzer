@@ -1,4 +1,6 @@
 package models
+
+import java.sql.Timestamp
 // AUTO-GENERATED Slick data model
 /** Stand-alone Slick data model for immediate use */
 object Tables extends {
@@ -25,14 +27,14 @@ trait Tables {
    * @param userId         Database column user_id SqlType(int4)
    * @param pollutiontype  Database column pollutionType SqlType(varchar), Length(100,true)
    * @param specifiedvalue Database column specifiedValue SqlType(float8), Default(None)
-   * @param lastdate       Database column lastDate SqlType(timestamptz), Default(None) */
-  case class ConstraintsRow(userId: Int, pollutiontype: String, specifiedvalue: Option[Double] = None, lastdate: Option[java.sql.Timestamp] = None)
+   * @param lastdate       Database column lastDate SqlType(timestamptz), Default(new Timestamp(0)) */
+  case class ConstraintsRow(userId: Int, pollutiontype: String, specifiedvalue: Option[Double] = None, lastdate: java.sql.Timestamp = new Timestamp(0))
 
   /** GetResult implicit for fetching ConstraintsRow objects using plain SQL queries */
-  implicit def GetResultConstraintsRow(implicit e0: GR[Int], e1: GR[String], e2: GR[Option[Double]], e3: GR[Option[java.sql.Timestamp]]): GR[ConstraintsRow] = GR {
+  implicit def GetResultConstraintsRow(implicit e0: GR[Int], e1: GR[String], e2: GR[Option[Double]], e3: GR[java.sql.Timestamp]): GR[ConstraintsRow] = GR {
     prs =>
       import prs._
-      ConstraintsRow.tupled((<<[Int], <<[String], <<?[Double], <<?[java.sql.Timestamp]))
+      ConstraintsRow.tupled((<<[Int], <<[String], <<?[Double], <<[java.sql.Timestamp]))
   }
 
   /** Table description of table Constraints. Objects of this class serve as prototypes for rows in queries. */
@@ -49,7 +51,7 @@ trait Tables {
     /** Database column specifiedValue SqlType(float8), Default(None) */
     val specifiedvalue: Rep[Option[Double]] = column[Option[Double]]("specifiedValue", O.Default(None))
     /** Database column lastDate SqlType(timestamptz), Default(None) */
-    val lastdate: Rep[Option[java.sql.Timestamp]] = column[Option[java.sql.Timestamp]]("lastDate", O.Default(None))
+    val lastdate: Rep[java.sql.Timestamp] = column[java.sql.Timestamp]("lastDate", O.Default(new Timestamp(0)))
 
     /** Foreign key referencing Users (database name constraints_users_id_fk) */
     lazy val usersFk = foreignKey("constraints_users_id_fk", userId, Users)(r => r.id, onUpdate = ForeignKeyAction.NoAction, onDelete = ForeignKeyAction.NoAction)
